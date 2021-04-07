@@ -43,7 +43,6 @@ public class CameraDrag : MonoBehaviour
 			}
 		}
 	}
-
 	void LeftMouseDrag()
 	{
 		Vector3 direction = Camera.main.ScreenToWorldPoint(currentPosition) - Camera.main.ScreenToWorldPoint(hitPosition);
@@ -54,7 +53,7 @@ public class CameraDrag : MonoBehaviour
 	}
 	void OnMenuButton()
 	{
-		isMenuOpen = (isMenuOpen == true ? false : true);
+		isMenuOpen = (isMenuOpen != true);
 	}
 	private void OnEnable()
 	{

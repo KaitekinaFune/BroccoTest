@@ -35,8 +35,12 @@ public class MapBuilder : MonoBehaviour
 
 	private void LoadTiles()
 	{
+		Tile lastTile = new Tile();
+
 		foreach (Tile tile in tileList.tile)
 		{
+			CheckForGaps(tile, lastTile);
+
 			Vector3 pos = new Vector3(tile.X, 0, tile.Y);
 			GameObject currentTile = Instantiate(mapTilePrefab, pos, Quaternion.Euler(Vector3.right * 90));
 			currentTile.transform.localScale = new Vector3(tile.Width, tile.Height, 1);
@@ -48,8 +52,26 @@ public class MapBuilder : MonoBehaviour
 
 			currentTile.transform.SetParent(transform);
 
+			// Временно сохраняет текущую клетку для проверки на "дырки" в карте
+			lastTile = tile;
+
 			// Сохраняет минимальные и максимальные X и Y для ограничения движения камеры
 			GetMinMax(tile);
+		}
+	}
+
+	void CheckForGaps(Tile tile, Tile lastTile)
+	{
+		if (lastTile == null) return;
+
+		if (tile.X - lastTile.X > tile.Width)
+		{
+			tile.X = (lastTile.X + lastTile.Width / 2) + tile.Width / 2;
+		}
+
+		if (tile.Y - lastTile.Y > tile.Height)
+		{
+			tile.Y = (lastTile.Y + lastTile.Height / 2) + tile.Height / 2;
 		}
 	}
 
