@@ -3,64 +3,41 @@
 public class CameraDrag : MonoBehaviour
 {
 	[SerializeField]
-	float smoothAmount = 10f;
+	private float smoothAmount = 10f;
 
-	[HideInInspector]
-	public bool isMenuOpen;
+	private bool isMoving;
 
-	bool isMoving;
+	private Vector3 hitPosition;
+	private Vector3 cameraPosition;
+	private Vector3 targetPosition;
 
-	Vector3 hitPosition;
-	Vector3 currentPosition;
-	Vector3 cameraPosition;
-	Vector3 targetPosition;
-
-	void Update()
+	private void Update()
 	{ 
-		if (!isMenuOpen)
+		if (isMoving)
 		{
-			if (Input.GetMouseButtonDown(0))
+			transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothAmount);
+			if (transform.position == targetPosition)
 			{
-				hitPosition = Input.mousePosition;
-				cameraPosition = transform.position;
-			}
-
-			if (Input.GetMouseButton(0))
-			{
-				currentPosition = Input.mousePosition;
-				LeftMouseDrag();
-				isMoving = true;
-			}
-
-			if (isMoving)
-			{
-				transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothAmount);
-
-				if (transform.position == targetPosition)
-				{
-					isMoving = false;
-				}
+				isMoving = false;
 			}
 		}
 	}
-	void LeftMouseDrag()
+
+	public void OnPress()
 	{
+		hitPosition = Input.mousePosition;
+		cameraPosition = transform.position;
+	}
+
+	public void OnHold()
+	{
+		Vector3 currentPosition = Input.mousePosition;
 		Vector3 direction = Camera.main.ScreenToWorldPoint(currentPosition) - Camera.main.ScreenToWorldPoint(hitPosition);
+
+		isMoving = true;
 
 		direction = -direction;
 
 		targetPosition = cameraPosition + direction;
-	}
-	void OnMenuButton()
-	{
-		isMenuOpen = (isMenuOpen != true);
-	}
-	private void OnEnable()
-	{
-		Menu.MenuButton += OnMenuButton;
-	}
-	private void OnDisable()
-	{
-		Menu.MenuButton -= OnMenuButton;
 	}
 }

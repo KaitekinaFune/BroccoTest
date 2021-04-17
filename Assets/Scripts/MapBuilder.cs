@@ -35,7 +35,7 @@ public class MapBuilder : MonoBehaviour
 
 	private void LoadTiles()
 	{
-		Tile lastTile = new Tile();
+		Tile lastTile = null;
 
 		foreach (Tile tile in tileList.tile)
 		{
@@ -60,7 +60,7 @@ public class MapBuilder : MonoBehaviour
 		}
 	}
 
-	void CheckForGaps(Tile tile, Tile lastTile)
+	private void CheckForGaps(Tile tile, Tile lastTile)
 	{
 		if (lastTile == null) return;
 
@@ -75,7 +75,7 @@ public class MapBuilder : MonoBehaviour
 		}
 	}
 
-	void GetMinMax(Tile tile)
+	private void GetMinMax(Tile tile)
 	{
 		if (tile.X - tile.Width / 2 < min.x)
 			min.x = tile.X - tile.Width / 2;

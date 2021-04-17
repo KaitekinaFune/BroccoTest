@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
 		}
 	}
 
-    void GetTopLeftTile()
+    private void GetTopLeftTile()
 	{
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(0, Screen.height, 0));
 

@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class CameraClamp : MonoBehaviour
 {
-	Vector2 screenSizeInWorldUnits;
-	float initialCameraHeight = 10f;
+	private Vector2 screenSizeInWorldUnits;
+	private float initialCameraHeight = 10f;
 
-	void Start()
+	private void Start()
 	{
 		CalculateScreenSize();
 	}
 
-	void LateUpdate()
+	private void LateUpdate()
 	{
-		transform.position = new Vector3(
+		transform.position = new Vector3 (
 			Mathf.Clamp(transform.position.x, MapBuilder.min.x + screenSizeInWorldUnits.x, MapBuilder.max.x - screenSizeInWorldUnits.x),
 			initialCameraHeight,
 			Mathf.Clamp(transform.position.z, MapBuilder.min.y + screenSizeInWorldUnits.y, MapBuilder.max.y - screenSizeInWorldUnits.y));
