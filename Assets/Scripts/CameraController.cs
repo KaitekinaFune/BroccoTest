@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(CameraClamp))]
 [RequireComponent(typeof(CameraDrag))]
-[RequireComponent(typeof(CameraClamp))]
+[RequireComponent(typeof(CameraZoom))]
 public class CameraController : MonoBehaviour
 {
     private CameraClamp clamp;
